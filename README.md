@@ -1,9 +1,9 @@
 # Cloud challenge
 
-To deploy dynamodb stack:
+To deploy template to stack:
 
 ```bash
-aws cloudformation deploy --template-file dynamodb.yaml --stack-name static-website --capabilities  CAPABILITY_NAMED_IAM
+aws cloudformation deploy --template-file main.yaml --stack-name static-website --capabilities  CAPABILITY_NAMED_IAM
 ```
 
 Upload index and website files to bucket

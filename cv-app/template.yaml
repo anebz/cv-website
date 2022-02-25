@@ -1,5 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+
 Description: >
   cv-app
 
@@ -17,12 +18,8 @@ Resources:
     Properties:
       BucketName: anebz-cv
       AccessControl: PublicRead
-
-  S3BucketContent:
-    Type: AWS::Serverless::BucketContent
-    Properties:
-      BucketName: !Ref S3Bucket
-      ContentUri: ./static
+      WebsiteConfiguration:
+        IndexDocument: index.html
 
   S3BucketPolicy:
     Type: AWS::S3::BucketPolicy

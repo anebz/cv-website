@@ -11,12 +11,17 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+  BucketName:
+    Type: String
+    Default: anebz
+
 Resources:
 
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: anebz-cv
+      BucketName: !Ref BucketName
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
@@ -73,7 +78,6 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

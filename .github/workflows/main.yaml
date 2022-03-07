@@ -1,7 +1,7 @@
 name: Infra test and deploy
 on: [push]
 jobs:
-  test-infra:
+  test_infra:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out the repository
@@ -22,10 +22,18 @@ jobs:
         run: |
           cd cv-app/tests/unit
           pytest
-  deploy-infra:
+  deploy_infra:
+    needs: test_infra
     runs-on: ubuntu-latest
     steps:
-      - name: Checking out the repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - run: sam build --use-container
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
       - name: Update static files with S3
-        run: ls
+        run: aws s3 cp static/. s3://anebz/ --recursive

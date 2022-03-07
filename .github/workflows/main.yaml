@@ -17,8 +17,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests with pytest
         run: |
-          ls
-          cd unit
+          cd cv-app/tests/unit
           pytest
   deploy-infra:
     runs-on: ubuntu-latest

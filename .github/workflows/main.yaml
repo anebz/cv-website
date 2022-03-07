@@ -12,7 +12,7 @@ jobs:
           python-version: 3.6
       - name: Install dependencies
         run: |
-          cd cv-app
+          cd cv-app/tests
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run tests with pytest

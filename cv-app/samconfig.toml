@@ -8,6 +8,6 @@ s3_prefix = "cv-app"
 region = "eu-central-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-disable_rollback = true
+disable_rollback = false
 image_repositories = []
-parameter_overrides = "BucketName=\"anebz\"
+parameter_overrides = "BucketName=\"anebz\""

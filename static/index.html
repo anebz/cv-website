@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <title>Ane Berasategi - Resume</title>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu'>
+  <script>
+    fetch('https://9tru42t6b6.execute-api.eu-central-1.amazonaws.com/hello')
+      .then(response => response.json())
+      .then((data) => {
+        document.getElementById('visitors').innerText = data.Count
+      })
+  </script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css'>
 <link rel='stylesheet' href='https://s.plurk.com/0e89357f530f0a843c68440a020d4eb5.css'><link rel="stylesheet" href="./style.css">
 
@@ -17,6 +24,10 @@
       <div class="info">
         <h4 class="name">Ane Berasategi</h4><small class="job">DevOps Engineer</small>
       </div>
+      <p>
+        Visitors today:
+        <span id="visitors" />
+      </p>
     </div>
     <div class="about">
       <h3>About me</h3>I am a multi-faceted DevOps Engineer with background in software engineering and Machine Learning, Computer Vision and NLP specifically.

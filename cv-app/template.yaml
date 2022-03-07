@@ -48,7 +48,7 @@ Resources:
   MyTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: my-table
+      TableName: cv-website-table
       PrimaryKey:
         Name: date
         Type: String
@@ -67,7 +67,7 @@ Resources:
       Runtime: python3.8
       Timeout: 10
       Policies:
-        DynamoDBWritePolicy:
+        DynamoDBCrudPolicy:
           TableName: !Ref MyTable
       Environment:
         Variables:

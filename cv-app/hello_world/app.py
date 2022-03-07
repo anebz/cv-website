@@ -26,13 +26,27 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # increment count by 1
     dbresponse = ddbClient.update_item(
         TableName=os.environ['TABLENAME'],
-        Key={'date': {'S': datetime.today().strftime('%Y-%m-%d')}},
+        Key={'date': {'S': today}},
         UpdateExpression="ADD #counter :increment",
         ExpressionAttributeNames={'#counter': 'count'},
         ExpressionAttributeValues={':increment': {'N': '1'}}
     )
-    httpscode = dbresponse['ResponseMetadata']['HTTPStatusCode']
-    return {'statusCode': httpscode,
-            'body': json.dumps('Count updated' if httpscode == 200 else 'Error: count was not updated')}
+
+    # get count
+    getItemResponse = ddbClient.get_item(
+        TableName=os.environ['TABLENAME'],
+        Key={"date": {"S": today}}
+    )
+    httpscode = getItemResponse['ResponseMetadata']['HTTPStatusCode']
+    count = getItemResponse['Item']['count']['N'] if httpscode == 200 else -1
+    
+    return {'headers': {"Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET",
+                        "Access-Control-Allow-Headers": "Content-Type"},
+            'statusCode': httpscode,
+            'body': json.dumps({"Count": count})}

@@ -29,13 +29,20 @@ def lambda_handler(event, context):
     today = datetime.now().strftime('%Y-%m-%d')
 
     # increment count by 1
-    dbresponse = ddbClient.update_item(
+    dbResponse = ddbClient.update_item(
         TableName=os.environ['TABLENAME'],
         Key={'date': {'S': today}},
         UpdateExpression="ADD #counter :increment",
         ExpressionAttributeNames={'#counter': 'count'},
         ExpressionAttributeValues={':increment': {'N': '1'}}
     )
+
+    if dbResponse['ResponseMetadata']['HTTPStatusCode'] != 200:
+        return {'headers': {"Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Methods": "GET",
+                            "Access-Control-Allow-Headers": "Content-Type"},
+        'statusCode': dbResponse['ResponseMetadata']['HTTPStatusCode'],
+        'body': json.dumps({"Count": -1})}
 
     # get count
     getItemResponse = ddbClient.get_item(

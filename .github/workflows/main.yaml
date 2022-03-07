@@ -1,0 +1,28 @@
+name: Infra test and deploy
+on: [push]
+jobs:
+  test-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v2
+      - name: Install Python 3
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: |
+          cd cv-app
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests with pytest
+        run: |
+          cd cv-app/function/tests/unit
+          pytest
+  deploy-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out the repository
+        uses: actions/checkout@v2
+      - name: Update static files with S3
+        run: ls

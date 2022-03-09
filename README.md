@@ -1,8 +1,6 @@
-# Cloud challenge
+# Cloud resume challenge
 
-Using AWS SAM
-
-To deploy template to stack:
+To deploy SAM template to stack:
 
 ```bash
 sam build
@@ -13,6 +11,10 @@ Upload index and website files to bucket
 ```bash
 aws s3 cp static/. s3://anebz/ --recursive
 ```
+
+Now these steps are done through Github Actions 🚀
+
+## Frontend
 
 Removing front-end resources from template because some things can't be done via code:
 
@@ -32,4 +34,5 @@ Removing front-end resources from template because some things can't be done via
    5. Leave HTTP/s enabled
    6. Leave IPv6 On
    7. Create, it takes some minutes to deploy
+   8. After this, an A type route is created in the hosted zone from Route 53
 5. Go to the domain name and you should see that the website has HTTPS
